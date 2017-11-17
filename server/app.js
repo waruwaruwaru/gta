@@ -7,34 +7,7 @@ var bodyParser = require('body-parser');
 var http = require('http');
 var index = require('./routes/index');
 var users = require('./routes/users');
-
-var pg = require('pg')
-var format = require('pg-format')
-var PGUSER = 'yourUserName'
-var PGDATABASE = 'example'
-var age = 732
-var config = {
-  user: PGUSER, // name of the user account
-  database: PGDATABASE, // name of the database
-  max: 10, // max number of clients in the pool
-  idleTimeoutMillis: 30000 // how long a client is allowed to remain idle before being closed
-}
-var pool = new pg.Pool(config)
-var myClient
-pool.connect(function (err, client, done) {
-  if (err) console.log(err)
-  app.listen(4000, function () {
-    console.log('listening on 4000')
-  })
-  myClient = client
-  var ageQuery = format('SELECT * from numbers WHERE age = %L', age)
-  myClient.query(ageQuery, function (err, result) {
-    if (err) {
-      console.log(err)
-    }
-    console.log(result.rows[0])
-  })
-})
+var cors = require('cors');
 
 var app = express();
 var port = (process.env.PORT || '4000');
@@ -55,7 +28,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-
+app.use('/')
+app.use(cors());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
