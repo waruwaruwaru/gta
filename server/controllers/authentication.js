@@ -1,28 +1,35 @@
 const { Client } = require('pg');
-const connectionString = 'postgresql://Waru:123@localhost:5433/gtadb';
+const connectionString = 'jdbc:postgresql://gtapocdbb.c7o752b846hb.us-east-1.rds.amazonaws.com:5432/gtapocdbb'
 
 exports.signup = function(req, res) {
-  const name = req.body.name;
+  const firstname = req.body.firstname;
+  const lastname = req.body.lastname;
   const dob = req.body.dob;
   const university_id = req.body.university_id;
   const email = req.body.email; //university email
   const password = req.body.password;
 
   var client = new Client({
-    connectionString: connectionString,
-  });
+    user: 'six',
+    host: 'gtapocdbb.c7o752b846hb.us-east-1.rds.amazonaws.com',
+    database: 'gtapocdbb',
+    password: 'gtapocdb',
+    port: 5432,
+  })
   client.connect();
-  client.query("SELECT FROM users WHERE university_email = $1", [email])
+  client.query("SELECT FROM users WHERE email = $1", [email])
     .then(function(data) {
       console.log('data: ', data);
       if (data.rowCount == 0) {
-        client.query("INSERT INTO users(name, dob, university_id, university_email, password) VALUES($1, $2, $3, $4, $5)",
-        [name, dob, university_id, email, password])
+        client.query("INSERT INTO users(firstname, lastname, dob, universityid, email, password) VALUES($1, $2, $3, $4, $5, $6)",
+        [firstname, lastname, dob, university_id, email, password])
         .then(() => { res.send("DONE")});
       } else {
         res.send("EMAIL ALREADY EXISTS");
       }
     });
+
+
 
 
 };
