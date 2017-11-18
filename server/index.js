@@ -6,8 +6,11 @@ const http = require('http');
 const router = require('./router');
 
 //This lets us use bodyParser to parse incoming requests into JSON.
+//Body Parser Middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: false }));
+
+//Cors allow cross domain
 app.use(cors());
 router(app);
 
