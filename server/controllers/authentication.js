@@ -1,8 +1,8 @@
-const { Client } = require('pg');
+
 const connectionString = 'jdbc:postgresql://gtapocdbb.c7o752b846hb.us-east-1.rds.amazonaws.com:5432/gtapocdbb'
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-
+const client = require('../config.js');
 
 exports.signup = function(req, res) {
   var firstname = req.body.firstname;
@@ -12,13 +12,6 @@ exports.signup = function(req, res) {
   var email = req.body.email; //university email
   var password = req.body.password;
 
-  var client = new Client({
-    user: 'six',
-    host: 'gtapocdbb.c7o752b846hb.us-east-1.rds.amazonaws.com',
-    database: 'gtapocdbb',
-    password: 'gtapocdb',
-    port: 5432,
-  })
   client.connect();
   bcrypt.hash(password, saltRounds, function(err, hash) {
     // Store hash in your password DB.
@@ -33,7 +26,6 @@ exports.signup = function(req, res) {
         }
       });
   });
-
 };
 
 
