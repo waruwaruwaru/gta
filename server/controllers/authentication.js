@@ -13,6 +13,11 @@ exports.signup = function(req, res) {
   var password = req.body.password;
 
   client.connect();
+
+  if(!firstname || !lastname || !dob || !university_id || !email || !password) {
+    return res.status(422).send({ error: 'You did not provide all the fields required'});
+  }
+
   bcrypt.hash(password, saltRounds, function(err, hash) {
     // Store hash in your password DB.
     client.query("SELECT FROM users WHERE email = $1", [email])
