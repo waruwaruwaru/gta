@@ -19,6 +19,11 @@ exports.signup = function(req, res) {
   var email = req.body.email; //university email
   var password = req.body.password;
 
+  var universityEmails = {
+    '@ucdavis.edu': 1,
+    '@berkeley.edu': 2,
+  };
+
   client.connect();
 
   if(!firstname || !lastname || !dob || !university_id || !email || !password) {
