@@ -1,5 +1,5 @@
 const jwt = require("jwt-simple");
-const connectionString = 'jdbc:postgresql://gtapocdbb.c7o752b846hb.us-east-1.rds.amazonaws.com:5432/gtapocdbb'
+const connectionString = 'jdbc:postgresql://gtapocdbb.c7o752b846hb.us-east-1.rds.amazonaws.com:5432/gtapocdbb';
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const client = require('../configs/db.js');
