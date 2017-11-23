@@ -40,9 +40,11 @@ exports.signup = function(req, res) {
           .then((data2) => {
             console.log('data2: ', data2.rows[0].id); //This is the user's id
             res.send({ token: tokenForUser(data2.rows[0].id )});
+            client.end();
           });
         } else {
           res.send("EMAIL ALREADY EXISTS");
+          client.end();
         }
       });
   });
