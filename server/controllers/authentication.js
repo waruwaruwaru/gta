@@ -24,7 +24,7 @@ exports.signup = function(req, res) {
     '@berkeley.edu': 2,
   };
 
-  client.connect();
+  // client.connect();
 
   if(!firstname || !lastname || !dob || !university_id || !email || !password) {
     return res.status(422).send({ error: 'You did not provide all the fields required'});
@@ -40,11 +40,21 @@ exports.signup = function(req, res) {
           .then((data2) => {
             console.log('data2: ', data2.rows[0].id); //This is the user's id
             res.send({ token: tokenForUser(data2.rows[0].id )});
-            client.end();
+            // client.end((err) => {
+            //   console.log('client disconnected');
+            //   if (err) {
+            //     console.log('error on client.end: ', err);
+            //   }
+            // });
           });
         } else {
           res.send("EMAIL ALREADY EXISTS");
-          client.end();
+          // client.end((err) => {
+          //   console.log('client disconnected');
+          //   if (err) {
+          //     console.log('error on client.end: ', err);
+          //   }
+          // });
         }
       });
   });
