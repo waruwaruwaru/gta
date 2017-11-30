@@ -21,15 +21,26 @@ const localLogin = new LocalStrategy(localOptions, function(email, password, don
   //Verify this email and password, call done with the user
   //if it is the correct email and password
   //otherwise, call done with false
-  console.log('here');
 
-  // client.query("SELECT FROM users where email = $1", [email], function(err, user) {
-  //   if(err) { return done(err); }
-  //   if(!user) { return done(null, false); }
-  //
-  //
-  //
-  // });
+  client.query("SELECT * FROM users where email = $1", [email], function(err, user) {
+    console.log('err', err);
+    if(err) { return done(err); }
+
+    if(!user) { return done(null, false); }
+    // console.log('user', user);
+    // console.log('password: ', password);
+    // console.log('user.password: ', user.rows[0].password);
+
+    bcrypt.compare(password, user.rows[0].password, function(error, res) {
+      console.log('error: ', error)
+      console.log('res: ', res);
+      if (res) {
+        return done(null, user.rows[0].id);
+      }
+    })
+
+
+  });
 });
 
 
