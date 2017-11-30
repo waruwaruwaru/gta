@@ -49,5 +49,5 @@ exports.signup = function(req, res) {
 
 
 exports.signin = function(req, res) {
-
+  res.send("SIGNED IN");
 };

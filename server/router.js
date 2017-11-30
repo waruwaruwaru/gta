@@ -6,11 +6,12 @@ const passport = require('passport');
 //tells passport to authenticate using jwt and session : false mean don't create a default cookie.
 //not needed since we using jwt instead.
 const requireAuth = passport.authenticate('jwt', { session: false });
+const requireSignin = passport.authenticate('local', { session: false });
 
 
 module.exports = function(app) {
   app.post('/signup', Authentication.signup);
-  app.post('/signin', requireAuth, Authentication.signin);
+  app.post('/signin', requireSignin, Authentication.signin);
   app.get('/rides/:id', requireAuth, Rides);
 
   //An example of an end point the requires authentication

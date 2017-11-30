@@ -2,8 +2,9 @@ const passport = require('passport');
 const secret = require('../configs/secret.js');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
+const LocalStrategy = require('passport-local');
 const client = require('../configs/db.js');
-
+const bcrypt = require('bcrypt');
 
 //Setup options for JWT Strategy
 const jwtOptions = {
@@ -13,6 +14,25 @@ const jwtOptions = {
 
 
 //Create JWT Strategy
+//By default Local Strategy looks for a username and password
+//This localOption tells where to look for our username, which is our email in this case.
+const localOptions = { usernameField: 'email' };
+const localLogin = new LocalStrategy(localOptions, function(email, password, done) {
+  //Verify this email and password, call done with the user
+  //if it is the correct email and password
+  //otherwise, call done with false
+  console.log('here');
+
+  // client.query("SELECT FROM users where email = $1", [email], function(err, user) {
+  //   if(err) { return done(err); }
+  //   if(!user) { return done(null, false); }
+  //
+  //
+  //
+  // });
+});
+
+
 //payload is the decode jwt token
 const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
   //See if the user ID in the payload exists in our database
@@ -32,3 +52,4 @@ const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
 });
 //Tell passport to use this strategy
 passport.use(jwtLogin);
+passport.use(localLogin);
