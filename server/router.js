@@ -10,7 +10,7 @@ const requireAuth = passport.authenticate('jwt', { session: false });
 
 module.exports = function(app) {
   app.post('/signup', Authentication.signup);
-  app.post('/signin', Authentication.signin);
+  app.post('/signin', requireAuth, Authentication.signin);
   app.get('/rides/:id', requireAuth, Rides);
 
   //An example of an end point the requires authentication
