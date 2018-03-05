@@ -49,6 +49,5 @@ exports.signup = function(req, res) {
 
 
 exports.signin = function(req, res) {
-  console.log('req', req.user);
   res.send({ token: tokenForUser(req.user) }); //this req.user comes from the done(null, user) in the comparePassword function in passport.js
 };
